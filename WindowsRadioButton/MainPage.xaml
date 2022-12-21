@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WindowsRadioButton.MainPage">
+
+    <VerticalStackLayout>
+        <Border Grid.Row="8"
+                Grid.Column="2"
+                HeightRequest="43"
+                HorizontalOptions="FillAndExpand"
+                StrokeThickness="2">
+            <Border.Stroke>
+                <SolidColorBrush Color="#009CA6" />
+            </Border.Stroke>
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="{OnPlatform Android=2, iOS=0, WinUI=2}" />
+            </Border.StrokeShape>
+            <StackLayout x:Name="groupExpandCollapseStackLayout"
+                         BindableLayout.ItemsSource="{Binding GroupExpandAndCollapseSegments}"
+                         HorizontalOptions="FillAndExpand"
+                         Orientation="Horizontal"
+                         RadioButtonGroup.GroupName="RadioButtonGroup">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <RadioButton CheckedChanged="RadioButton_CheckedChanged"    
+                                     Content="{Binding .}"
+                                     HorizontalOptions="FillAndExpand">
+                            <RadioButton.ControlTemplate>
+                                <ControlTemplate>
+                                    <Grid x:Name="BackgroundGrid"
+                                          HorizontalOptions="FillAndExpand"
+                                          RowDefinitions="*">
+                                        <Label x:Name="TextLabel"
+                                               BindingContext="{Binding Source={RelativeSource TemplatedParent}, Path=Content}"
+                                               FontSize="14"
+                                               HorizontalOptions="Center"
+                                               Text="{Binding Text}"
+                                               VerticalOptions="Center">
+                                            <Label.Padding>
+                                                <OnPlatform x:TypeArguments="Thickness">
+                                                    <On Platform="iOS"
+                                                        Value="10,0,8,0" />
+                                                    <On Platform="WinUI"
+                                                        Value="10,0,8,0" />
+                                                    <On Platform="Android"
+                                                        Value="0" />
+                                                </OnPlatform>
+                                            </Label.Padding>
+                                        </Label>
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroupList>
+                                                <VisualStateGroup x:Name="CheckedStates">
+                                                    <VisualState x:Name="Checked">
+                                                        <VisualState.Setters>
+                                                            <Setter TargetName="TextLabel"
+                                                                    Property="Label.TextColor"
+                                                                    Value="{AppThemeBinding Light=White, Dark=#111111}" />
+                                                            <Setter TargetName="BackgroundGrid"
+                                                                    Property="Grid.BackgroundColor"
+                                                                    Value="#009CA6" />
+                                                        </VisualState.Setters>
+                                                    </VisualState>
+                                                    <VisualState x:Name="Unchecked">
+                                                        <VisualState.Setters>
+                                                            <Setter TargetName="TextLabel"
+                                                                    Property="Label.TextColor"
+                                                                    Value="#009CA6" />
+                                                            <Setter TargetName="BackgroundGrid"
+                                                                    Property="Grid.BackgroundColor"
+                                                                    Value="{AppThemeBinding Light=White, Dark=#111111}" />
+                                                        </VisualState.Setters>
+                                                    </VisualState>
+                                                </VisualStateGroup>
+                                            </VisualStateGroupList>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </Grid>
+                                </ControlTemplate>
+                            </RadioButton.ControlTemplate>
+                        </RadioButton>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+        </Border>
+    </VerticalStackLayout>
+</ContentPage>
